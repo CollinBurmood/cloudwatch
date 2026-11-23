@@ -34,8 +34,22 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
 .storm-card,.storm-empty{padding:13px;border:1px solid #62e7ff30;border-radius:13px;background:#62e7ff08;font-size:12px}
 .storm-card strong,.storm-card small{display:block}.storm-card small{color:var(--muted);margin-top:4px;font-size:11px}
 .small-btn{font-size:11px;padding:8px 11px;background:#1b2a51;color:#e8efff;border:1px solid var(--line)}
-@media(max-width:760px){.alert-panel,.storm-panel{padding:15px}}
-@media(max-width:760px){.topbar{align-items:flex-start;flex-wrap:wrap}.search{width:100%;order:2}.hero{grid-template-columns:1fr;padding:22px}.hero-right{align-items:flex-start;text-align:left}.sun-times{margin-top:12px}.metrics{grid-template-columns:repeat(2,1fr)}.bottom-grid{grid-template-columns:1fr}.shell{width:min(100% - 24px,600px);padding-top:18px}.day{grid-template-columns:1fr .5fr .8fr .7fr}.daydesc{display:none}}
+.extra-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.extra-panel{padding:18px;min-width:0}
+.data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.data-tile{padding:12px;border:1px solid var(--line);border-radius:13px;background:#101a38a8}
+.data-tile span{display:block;color:var(--muted);font-size:11px}
+.data-tile strong{display:block;font-size:21px;margin-top:3px}
+.data-tile small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.health-note,.muted-note{font-size:11px;color:var(--muted);margin-top:10px}
+.history-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.history-controls input{width:auto;min-width:130px;padding:9px;font-size:12px}
+.history-result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.history-result .data-tile strong{font-size:18px}
+.astronomy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.moon-display{display:flex;align-items:center;gap:14px;margin:8px 0 14px}
+.moon-emoji{font-size:48px;filter:drop-shadow(0 0 16px #d6dcff55)}
+@media(max-width:760px){.alert-panel,.storm-panel{padding:15px}.topbar{align-items:flex-start;flex-wrap:wrap}.search{width:100%;order:2}.hero{grid-template-columns:1fr;padding:22px}.hero-right{align-items:flex-start;text-align:left}.sun-times{margin-top:12px}.metrics{grid-template-columns:repeat(2,1fr)}.bottom-grid{grid-template-columns:1fr}.extra-grid{grid-template-columns:1fr}.history-result{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{width:min(100% - 24px,600px);padding-top:18px}.day{grid-template-columns:1fr .5fr .8fr .7fr}.daydesc{display:none}}
 @media(max-width:390px){.metrics{gap:8px}.metric{padding:13px}.temp{font-size:70px}.current{gap:12px}.weather-icon{font-size:52px}}
 </style>
 </head>
@@ -67,6 +81,57 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
  <div class="panel metric"><div class="metric-top"><span>UV INDEX</span><span class="metric-icon">☀️</span></div><strong id="uv">--</strong><small id="uvLabel">Solar intensity</small></div>
  <div class="panel metric"><div class="metric-top"><span>PRECIPITATION</span><span class="metric-icon">🌧️</span></div><strong id="rain">-- in</strong><small>Next hour estimate</small></div>
 </div>
+<div class="extra-grid">
+ <section class="panel extra-panel">
+  <div class="section-head" style="margin:0 0 12px"><div><h2>🌿 Air quality & pollen</h2><span>Local air and outdoor health indicators</span></div><span id="aqUpdated">LIVE</span></div>
+  <div class="data-grid">
+   <div class="data-tile"><span>US AIR QUALITY INDEX</span><strong id="aqi">--</strong><small id="aqiLabel">Waiting for data</small></div>
+   <div class="data-tile"><span>PM2.5</span><strong id="pm25">--</strong><small>µg/m³ · fine particles</small></div>
+   <div class="data-tile"><span>PM10</span><strong id="pm10">--</strong><small>µg/m³ · coarse particles</small></div>
+   <div class="data-tile"><span>DUST</span><strong id="dust">--</strong><small>µg/m³</small></div>
+   <div class="data-tile"><span>GRASS POLLEN</span><strong id="grassPollen">--</strong><small> grains/m³</small></div>
+   <div class="data-tile"><span>RAGWEED POLLEN</span><strong id="ragweedPollen">--</strong><small> grains/m³</small></div>
+  </div>
+  <div class="health-note" id="airAdvice">Air quality information will appear when available. PM2.5 and PM10 can include smoke and dust but do not identify their source.</div>
+ </section>
+ <section class="panel extra-panel">
+  <div class="section-head" style="margin:0 0 12px"><div><h2>🌡️ Advanced conditions</h2><span>Comfort and atmospheric measurements</span></div><span>LOCAL</span></div>
+  <div class="data-grid">
+   <div class="data-tile"><span>DEW POINT</span><strong id="dewPoint">--°F</strong><small>Moisture in the air</small></div>
+   <div class="data-tile"><span>WIND CHILL</span><strong id="windChill">--°F</strong><small>Wind-related cooling estimate</small></div>
+   <div class="data-tile"><span>HEAT INDEX</span><strong id="heatIndex">--°F</strong><small>Temperature + humidity estimate</small></div>
+   <div class="data-tile"><span>VISIBILITY</span><strong id="visibility">-- mi</strong><small>Horizontal visibility</small></div>
+   <div class="data-tile"><span>SEA-LEVEL PRESSURE</span><strong id="pressure">-- hPa</strong><small>Atmospheric pressure</small></div>
+   <div class="data-tile"><span>SURFACE PRESSURE</span><strong id="surfacePressure">-- hPa</strong><small>At local elevation</small></div>
+  </div>
+  <div class="muted-note">Wind chill and heat index are estimates based on standard formulas and current conditions.</div>
+ </section>
+ <section class="panel extra-panel">
+  <div class="section-head" style="margin:0 0 8px"><div><h2>📅 Historical weather</h2><span>Compare daily conditions over a selected period</span></div></div>
+  <div class="history-controls">
+   <label style="font-size:11px;color:var(--muted)">From <input type="date" id="historyStart"></label>
+   <label style="font-size:11px;color:var(--muted)">To <input type="date" id="historyEnd"></label>
+   <button type="button" class="small-btn" id="loadHistory">Compare dates</button>
+  </div>
+  <div class="history-result" id="historyResult">
+   <div class="data-tile"><span>AVERAGE HIGH</span><strong>--°F</strong></div>
+   <div class="data-tile"><span>AVERAGE LOW</span><strong>--°F</strong></div>
+   <div class="data-tile"><span>PRECIPITATION</span><strong>-- in</strong></div>
+  </div>
+  <div class="muted-note" id="historyNote">Choose a date range to compare historical daily highs, lows, and precipitation. Archive coverage varies by location and date.</div>
+ </section>
+ <section class="panel extra-panel">
+  <div class="section-head" style="margin:0 0 8px"><div><h2>🌙 Astronomy dashboard</h2><span>Moon, twilight and golden hour</span></div><span>LOCAL SKY</span></div>
+  <div class="moon-display"><div class="moon-emoji" id="moonEmoji">🌙</div><div><strong id="moonPhase">Moon phase loading</strong><div class="muted-note" id="moonIllumination">Illumination --%</div></div></div>
+  <div class="astronomy-grid">
+   <div class="data-tile"><span>MOONRISE</span><strong id="moonrise">--:--</strong></div>
+   <div class="data-tile"><span>MOONSET</span><strong id="moonset">--:--</strong></div>
+   <div class="data-tile"><span>MORNING GOLDEN HOUR</span><strong id="goldenMorning">--:--</strong></div>
+   <div class="data-tile"><span>EVENING GOLDEN HOUR</span><strong id="goldenEvening">--:--</strong></div>
+  </div>
+  <div class="muted-note">Times are calculated for the selected location and its local time zone. Golden hour is an approximate photography window.</div>
+ </section>
+</div>
 <div class="section-head"><h2>Hourly outlook</h2><span>NEXT 24 HOURS</span></div><div class="hourly" id="hourly"><div class="panel hour">Loading…</div></div>
 <div class="section-head"><h2>7-day forecast</h2><span>UPCOMING CONDITIONS</span></div><section class="panel days" id="days"><div class="day">Loading forecast…</div></section>
 <div class="bottom-grid" style="margin-top:14px">
@@ -76,6 +141,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
 <div class="status" id="status" role="status" aria-live="polite">Connecting to Open-Meteo weather services…</div>
 <footer class="footer">CLOUDWATCH · Forecast data by Open-Meteo · Map © OpenStreetMap contributors · Radar © RainViewer</footer>
 </main>
+<script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 const $=id=>document.getElementById(id);
@@ -84,7 +150,7 @@ const weather={
  45:['Fog','🌫️'],48:['Rime fog','🌫️'],51:['Light drizzle','🌦️'],53:['Drizzle','🌦️'],55:['Heavy drizzle','🌧️'],
  56:['Freezing drizzle','🌧️'],57:['Freezing drizzle','🌧️'],61:['Light rain','🌧️'],63:['Rain','🌧️'],65:['Heavy rain','🌧️'],
  66:['Freezing rain','🌧️'],67:['Heavy freezing rain','🌧️'],71:['Light snow','🌨️'],73:['Snow','❄️'],75:['Heavy snow','❄️'],
- 77:['Snow grains','🌨️'],80:['Rain showers','🌦️'],81:['Showers','🌧️'],82:['Heavy showers','⛈️'],85:['Snow showers','🌨️'],86:['Heavy snow showers','🌨️'],
+ 77:['Snow grains','❄️'],80:['Rain showers','🌦️'],81:['Showers','🌧️'],82:['Heavy showers','⛈️'],85:['Snow showers','🌨️'],86:['Heavy snow showers','🌨️'],
  95:['Thunderstorm','⛈️'],96:['Thunderstorm + hail','⛈️'],99:['Thunderstorm + hail','⛈️']
 };
 let map,marker,radarLayer,satelliteLayer,layerControl,radarFrameTime=null;
@@ -118,74 +184,45 @@ async function addRadarOverlay(){
   if(!radarFrames.length&&!satFrames.length)$('mapStatus').textContent='No radar or satellite frames are currently available.';
  }catch(e){$('mapStatus').textContent='Radar imagery is temporarily unavailable; the street map still works.'}
 }
-
 function initMap(lat,lon,label){
- if(!window.L){
-  setStatus('Map library did not load. Check your connection and refresh.',true);
-  return;
- }
+ if(!window.L){setStatus('Map library did not load. Check your connection and refresh.',true);return}
  if(!map){
   map=L.map('map',{scrollWheelZoom:true,zoomControl:true,maxZoom:19}).setView([lat,lon],8);
-  const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
-   maxNativeZoom:19,
-   maxZoom:19
-  });
-  street.addTo(map);
-  marker=L.marker([lat,lon]).addTo(map);
-  layerControl=L.control.layers(
-   {'Street map':street},
-   {},
-   {collapsed:true}
-  ).addTo(map);
+  const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',maxNativeZoom:19,maxZoom:19});
+  street.addTo(map);marker=L.marker([lat,lon]).addTo(map);
+  layerControl=L.control.layers({'Street map':street},{},{collapsed:true}).addTo(map);
   map.on('click',async event=>{
    const clickedLat=event.latlng.lat,clickedLon=event.latlng.lng;
    let clickedLabel=`Selected location (${clickedLat.toFixed(2)}, ${clickedLon.toFixed(2)})`;
    try{
     const reverse=await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${clickedLat}&longitude=${clickedLon}&language=en&format=json`);
     const result=await reverse.json();
-    if(result.results?.[0]){
-     const place=result.results[0];
-     clickedLabel=[place.name,place.admin1,place.country].filter(Boolean).join(', ');
-    }
+    if(result.results?.[0]){const place=result.results[0];clickedLabel=[place.name,place.admin1,place.country].filter(Boolean).join(', ')}
    }catch(error){}
    loadWeather(clickedLat,clickedLon,clickedLabel);
   });
   addRadarOverlay();
- }else{
-  map.setView([lat,lon],8);
-  marker.setLatLng([lat,lon]);
- }
+ }else{map.setView([lat,lon],8);marker.setLatLng([lat,lon])}
  marker.bindPopup(`<b>${label}</b><br>Click elsewhere on the map to see weather there`).openPopup();
  setTimeout(()=>map.invalidateSize(),150);
 }
-
 let chartTemps=[],chartTimes=[],chartMin=0,chartMax=1;
 function drawChart(times,temps){
- chartTemps=temps.slice(0,24);
- chartTimes=times.slice(0,24);
- if(!chartTemps.length)return;
- chartMin=Math.floor(Math.min(...chartTemps)-2);
- chartMax=Math.ceil(Math.max(...chartTemps)+2);
+ chartTemps=temps.slice(0,24);chartTimes=times.slice(0,24);if(!chartTemps.length)return;
+ chartMin=Math.floor(Math.min(...chartTemps)-2);chartMax=Math.ceil(Math.max(...chartTemps)+2);
  const points=chartTemps.map((v,i)=>`${i*500/Math.max(1,chartTemps.length-1)},${150-(v-chartMin)/(chartMax-chartMin||1)*125}`).join(' ');
  $('chart').innerHTML=`<defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#62e7ff" stop-opacity=".32"/><stop offset="1" stop-color="#9b8cff" stop-opacity="0"/></linearGradient></defs><polygon points="0,175 ${points} 500,175" fill="url(#fill)"/><polyline points="${points}" fill="none" stroke="#62e7ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line id="chartGuide" x1="0" y1="15" x2="0" y2="160" stroke="#62e7ff" stroke-dasharray="4 4" stroke-width="1.5"/><circle id="chartDotGlow" cx="0" cy="0" r="10" fill="#62e7ff" opacity=".2"/><circle id="chartDot" cx="0" cy="0" r="5" fill="#62e7ff" stroke="white" stroke-width="2"/>`;
- const slider=$('hourSlider');
- slider.max=String(chartTemps.length-1);
- slider.value='0';
- updateChartSelection(0);
+ $('hourSlider').max=String(chartTemps.length-1);$('hourSlider').value='0';updateChartSelection(0);
 }
 function updateChartSelection(index){
  if(!chartTemps.length)return;
- const i=Math.max(0,Math.min(Number(index),chartTemps.length-1));
- const x=i*500/Math.max(1,chartTemps.length-1);
- const y=150-(chartTemps[i]-chartMin)/(chartMax-chartMin||1)*125;
- ['chartGuide'].forEach(id=>{const el=$(id);if(el){el.setAttribute('x1',x);el.setAttribute('x2',x)}});
+ const i=Math.max(0,Math.min(Number(index),chartTemps.length-1)),x=i*500/Math.max(1,chartTemps.length-1),y=150-(chartTemps[i]-chartMin)/(chartMax-chartMin||1)*125;
+ const guide=$('chartGuide');if(guide){guide.setAttribute('x1',x);guide.setAttribute('x2',x)}
  ['chartDot','chartDotGlow'].forEach(id=>{const el=$(id);if(el){el.setAttribute('cx',x);el.setAttribute('cy',y)}});
  $('selectedTemp').textContent=Math.round(chartTemps[i])+'°F';
  $('selectedTime').textContent=chartTimes[i]?new Date(chartTimes[i]).toLocaleTimeString([],{weekday:'short',hour:'numeric',minute:'2-digit'}):'Selected hour';
 }
 $('hourSlider').addEventListener('input',event=>updateChartSelection(event.target.value));
-
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 async function loadAlerts(lat,lon){
  $('alertLocation').textContent=`Official NWS alerts near ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
@@ -240,17 +277,128 @@ async function loadStorms(){
 }
 $('refreshStorms').addEventListener('click',loadStorms);
 
+function setText(id,value){const el=$(id);if(el)el.textContent=value}
+function fmtNumber(value,digits=1,suffix=''){
+ return Number.isFinite(Number(value))?Number(value).toFixed(digits)+suffix:'Unavailable';
+}
+function aqiCategory(aqi){
+ if(!Number.isFinite(Number(aqi)))return 'Unavailable';
+ const v=Number(aqi);
+ if(v<=50)return 'Good';
+ if(v<=100)return 'Moderate';
+ if(v<=150)return 'Unhealthy for sensitive groups';
+ if(v<=200)return 'Unhealthy';
+ if(v<=300)return 'Very unhealthy';
+ return 'Hazardous';
+}
+function showAirQuality(data){
+ const c=data.current||{},h=data.hourly||{};
+ const get=(key)=>c[key]??(h[key]?.[0]);
+ const aqi=Number(get('us_aqi'));
+ setText('aqi',Number.isFinite(aqi)?Math.round(aqi):'N/A');
+ setText('aqiLabel',aqiCategory(aqi));
+ setText('pm25',fmtNumber(get('pm2_5')));
+ setText('pm10',fmtNumber(get('pm10')));
+ setText('dust',fmtNumber(get('dust')));
+ setText('grassPollen',fmtNumber(get('grass_pollen'),0));
+ setText('ragweedPollen',fmtNumber(get('ragweed_pollen'),0));
+ setText('aqUpdated','Updated '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}));
+ let advice='Air quality information is modelled and may not reflect a nearby sensor. Check local health guidance if you have respiratory or heart conditions.';
+ if(Number.isFinite(aqi)){
+  if(aqi<=50)advice='Air quality is good. Outdoor activity is generally suitable.';
+  else if(aqi<=100)advice='Air quality is moderate. Unusually sensitive people may want to limit prolonged, intense outdoor activity.';
+  else if(aqi<=150)advice='Sensitive groups may experience effects. Consider reducing prolonged outdoor exertion.';
+  else if(aqi<=200)advice='Air quality is unhealthy. Consider limiting outdoor exertion and keeping windows closed.';
+  else advice='Air quality is very unhealthy or hazardous. Avoid strenuous outdoor activity and follow local public-health advice.';
+ }
+ const pm=get('pm2_5');
+ if(pm!==undefined&&pm!==null)advice+=' PM2.5 can include smoke particles; this feed does not identify whether particles come from wildfire smoke, traffic, or another source.';
+ setText('airAdvice',advice);
+}
+async function loadAirQuality(lat,lon){
+ try{
+  const url=`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=us_aqi,european_aqi,pm2_5,pm10,dust,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&hourly=grass_pollen,ragweed_pollen,birch_pollen,alder_pollen,olive_pollen,mugwort_pollen&timezone=auto&forecast_days=1`;
+  const r=await fetch(url);if(!r.ok)throw new Error('Air quality feed unavailable');
+  showAirQuality(await r.json());
+ }catch(e){
+  ['aqi','pm25','pm10','dust','grassPollen','ragweedPollen'].forEach(id=>setText(id,'N/A'));
+  setText('aqiLabel','Feed unavailable');
+  setText('airAdvice','Air-quality or pollen data is temporarily unavailable for this location. Smoke and dust are not separately identified by the particulate readings.');
+ }
+}
+function calculateWindChill(tempF,windMph){
+ if(tempF>50||windMph<3)return null;
+ return 35.74+0.6215*tempF-35.75*Math.pow(windMph,0.16)+0.4275*tempF*Math.pow(windMph,0.16);
+}
+function calculateHeatIndex(tempF,humidity){
+ if(tempF<80||humidity<40)return null;
+ const T=tempF,R=humidity;
+ return -42.379+2.04901523*T+10.14333127*R-.22475541*T*R-.00683783*T*T-.05481717*R*R+.00122874*T*T*R+.00085282*T*R*R-.00000199*T*T*R*R;
+}
+function showAstronomy(lat,lon){
+ if(!window.SunCalc){setText('moonPhase','Astronomy library unavailable');return}
+ const now=new Date(),times=SunCalc.getTimes(now,lat,lon),moon=SunCalc.getMoonIllumination(now),moonTimes=SunCalc.getMoonTimes(now,lat,lon);
+ const phase=moon.phase;
+ let name,emoji;
+ if(phase<.03||phase>.97){name='New moon';emoji='🌑'}
+ else if(phase<.22){name='Waxing crescent';emoji='🌒'}
+ else if(phase<.28){name='First quarter';emoji='🌓'}
+ else if(phase<.47){name='Waxing gibbous';emoji='🌔'}
+ else if(phase<.53){name='Full moon';emoji='🌕'}
+ else if(phase<.72){name='Waning gibbous';emoji='🌖'}
+ else if(phase<.78){name='Last quarter';emoji='🌗'}
+ else{name='Waning crescent';emoji='🌘'}
+ setText('moonEmoji',emoji);setText('moonPhase',name);
+ setText('moonIllumination',Math.round(moon.fraction*100)+'% illuminated');
+ setText('moonrise',moonTimes.rise?fmtTime(moonTimes.rise):'No rise today');
+ setText('moonset',moonTimes.set?fmtTime(moonTimes.set):'No set today');
+ setText('goldenMorning',times.goldenHour?fmtTime(times.goldenHour):'--:--');
+ setText('goldenEvening',times.goldenHourEnd?fmtTime(times.goldenHourEnd):'--:--');
+}
+async function loadHistorical(){
+ const start=$('historyStart').value,end=$('historyEnd').value;
+ if(!start||!end||start>end){setText('historyNote','Choose a valid start and end date.');return}
+ const days=(new Date(end+'T00:00:00')-new Date(start+'T00:00:00'))/86400000;
+ if(days>366){setText('historyNote','Please choose a range of 366 days or fewer at a time.');return}
+ setText('historyNote','Loading historical observations…');
+ try{
+  const url=`https://archive-api.open-meteo.com/v1/archive?latitude=${currentLat}&longitude=${currentLon}&start_date=${start}&end_date=${end}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=auto`;
+  const r=await fetch(url);if(!r.ok)throw new Error('Historical archive is unavailable for part or all of this date range.');
+  const d=await r.json(),daily=d.daily;
+  if(!daily?.time?.length)throw new Error('No historical data was returned for this date range.');
+  const avg=a=>a.length?a.reduce((x,y)=>x+Number(y||0),0)/a.length:NaN;
+  const high=avg(daily.temperature_2m_max),low=avg(daily.temperature_2m_min),rain=daily.precipitation_sum.reduce((a,b)=>a+Number(b||0),0);
+  $('historyResult').innerHTML=`<div class="data-tile"><span>AVERAGE DAILY HIGH</span><strong>${high.toFixed(1)}°F</strong><small>Across ${daily.time.length} days</small></div><div class="data-tile"><span>AVERAGE DAILY LOW</span><strong>${low.toFixed(1)}°F</strong><small>Across ${daily.time.length} days</small></div><div class="data-tile"><span>TOTAL PRECIPITATION</span><strong>${rain.toFixed(2)} in</strong><small>Across selected period</small></div>`;
+  setText('historyNote',`Historical summary for ${start} through ${end}. Daily archive coverage and completeness vary by location.`);
+ }catch(e){setText('historyNote',e.message);$('historyResult').innerHTML='<div class="data-tile"><span>AVERAGE HIGH</span><strong>--</strong></div><div class="data-tile"><span>AVERAGE LOW</span><strong>--</strong></div><div class="data-tile"><span>PRECIPITATION</span><strong>--</strong></div>'}
+}
+$('loadHistory').addEventListener('click',loadHistorical);
+(function initHistoryDates(){
+ const today=new Date(),end=new Date(today);end.setDate(end.getDate()-2);
+ const start=new Date(end);start.setDate(start.getDate()-6);
+ const iso=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`};
+ $('historyEnd').value=iso(end);$('historyStart').value=iso(start);
+ $('historyStart').max=iso(end);$('historyEnd').max=iso(end);
+})();
+
 async function loadWeather(lat,lon,label){
- currentLat=lat;currentLon=lon;loadAlerts(lat,lon);
+ currentLat=lat;currentLon=lon;loadAlerts(lat,lon);loadAirQuality(lat,lon);showAstronomy(lat,lon);
  $('app').classList.add('loading');setStatus('Fetching live conditions…');
  try{
-  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&forecast_days=7`;
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m,wind_direction_10m,dew_point_2m,pressure_msl,surface_pressure,visibility&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&forecast_days=7`;
   const r=await fetch(url);if(!r.ok)throw new Error('Weather service returned an error. Please try again.');const d=await r.json(),c=d.current,day=d.daily;
   const [desc,icon]=weather[c.weather_code]||['Current conditions','🌡️'];
   $('place').textContent=label;$('dateLine').textContent=new Date().toLocaleDateString([],{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   $('temp').textContent=Math.round(c.temperature_2m)+'°F';$('condition').textContent=desc;$('feels').textContent=`Feels like ${Math.round(c.apparent_temperature)}°F`;$('mainIcon').textContent=icon;
   $('daylight').textContent=c.is_day?'Daytime conditions':'Nighttime conditions';
   $('humidity').textContent=c.relative_humidity_2m+'%';$('wind').textContent=Math.round(c.wind_speed_10m)+' mph';$('windDir').textContent=`Direction ${Math.round(c.wind_direction_10m)}°`;
+  setText('dewPoint',fmtNumber(c.dew_point_2m,0,'°F'));
+  const wc=calculateWindChill(c.temperature_2m,c.wind_speed_10m),hi=calculateHeatIndex(c.temperature_2m,c.relative_humidity_2m);
+  setText('windChill',wc===null?'N/A':Math.round(wc)+'°F');
+  setText('heatIndex',hi===null?'N/A':Math.round(hi)+'°F');
+  setText('visibility',c.visibility==null?'N/A':(c.visibility/1609.344).toFixed(1)+' mi');
+  setText('pressure',fmtNumber(c.pressure_msl,0,' hPa'));
+  setText('surfacePressure',fmtNumber(c.surface_pressure,0,' hPa'));
   const uv=day.uv_index_max[0]??0;$('uv').textContent=uv.toFixed(1);$('uvLabel').textContent=uvText(uv)+' exposure';$('rain').textContent=(c.precipitation??0).toFixed(2)+' in';
   $('sunrise').textContent=fmtTime(day.sunrise[0]);$('sunset').textContent=fmtTime(day.sunset[0]);
   const now=new Date();let start=d.hourly.time.findIndex(t=>new Date(t)>=now);if(start<0)start=0;
@@ -261,7 +409,7 @@ async function loadWeather(lat,lon,label){
  }catch(e){setStatus(e.message||'Could not load weather. Check your connection and try again.',true)}
  finally{$('app').classList.remove('loading')}
 }
-let suggestionTimer=null, suggestionResults=[], activeSuggestion=-1, suggestionController=null;
+let suggestionTimer=null,suggestionResults=[],activeSuggestion=-1,suggestionController=null;
 function hideSuggestions(){const box=$('citySuggestions');box.classList.remove('show');box.innerHTML='';$('cityInput').setAttribute('aria-expanded','false');activeSuggestion=-1}
 function chooseCity(p){
  const label=[p.name,p.admin1,p.country].filter(Boolean).join(', ');

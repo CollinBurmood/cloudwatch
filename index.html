@@ -1,4 +1,95 @@
 
+Loading older messages…
+User attachment
+also fix this error
+
+Worked for 27s
+
+Analysis output 1
+Analysis output 1
+
+
+
+
+
+
+
+
+Done! I made both updates to your CloudWatch file.
+
+Moved the nationwide storm tracker below the temperature curve and live radar section.
+
+Fixed the map tile error: Your screenshot showed OpenStreetMap returning 403 Access blocked. I switched both maps to CARTO's dark map tiles, while retaining the radar overlay and map controls.
+
+Updated file ready
+Download your updated CloudWatch index.html
+
+Replace your existing index.html in GitHub with this file and commit the changes. Then refresh your live site with Ctrl + F5.
+
+
+cloudwatch_updated_index.html
+HTML
+actually put the nationwide tracker at the bottom
+
+Worked for 16s
+
+
+
+
+
+
+
+
+Done! The nationwide tracker is now at the very bottom of CloudWatch, below the outdoor activity planner, air quality, advanced conditions, historical weather, and astronomy sections.
+
+Download the updated CloudWatch index.html
+
+Replace your existing GitHub index.html with this file and commit the change. All other features are preserved.
+
+
+cloudwatch_updated_index.html
+HTML
+For website monitoring layout tweaks, here’s a digital experience monitoring option.
+
+
+
+i cant download that
+
+Sorry about that! I made fresh copies with simpler filenames and included a ZIP backup.
+
+Try either of these:
+
+Download index.html directly
+
+Download ZIP backup
+
+The ZIP contains the updated file named index.html. Both versions have the nationwide tracker at the very bottom of the dashboard.
+
+
+index.html
+HTML
+This might also interest you.
+
+
+
+just give me a txt file of code so can copy paste
+
+Absolutely! Here's the complete updated code as a plain text file:
+
+Download CloudWatch Code.txt
+
+Open it, press Ctrl + A, then Ctrl + C to copy all the code and paste it into your GitHub index.html.
+
+
+cloudwatch_code.txt
+Document
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -56,40 +147,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
  <div class="storm-list" id="storms"><div class="storm-empty">Loading active tropical systems…</div></div>
  <div id="stormStatus" style="font-size:10px;color:var(--muted);margin-top:9px">Official storm information will appear when available.</div>
 </section>
-<section class="panel storm-tracker-panel" id="stormTracker">
- <div class="section-head" style="margin:0 0 8px"><div><h2>🌪️ Nationwide severe storm tracker</h2><span>Active U.S. warnings and preliminary storm reports</span></div><div class="storm-actions"><button type="button" class="small-btn" id="refreshStormTracker">↻ Refresh tracker</button><button type="button" class="small-btn" id="stormNationalView">🇺🇸 U.S. view</button></div></div>
- <div class="storm-stats">
-  <div class="storm-stat"><span>Active warnings</span><strong id="stormWarningCount">--</strong></div>
-  <div class="storm-stat"><span>Tornado warnings</span><strong id="tornadoWarningCount">--</strong></div>
-  <div class="storm-stat"><span>Severe thunderstorm</span><strong id="severeWarningCount">--</strong></div>
-  <div class="storm-stat"><span>Storm reports</span><strong id="stormReportCount">--</strong></div>
- </div>
- <div class="storm-toolbar">
-  <label>Warning type
-   <select id="stormTypeFilter"><option value="all">All warning types</option><option value="tornado">Tornado warnings</option><option value="severe">Severe thunderstorm warnings</option><option value="flood">Flash flood warnings</option></select>
-  </label>
-  <label>Severity
-   <select id="stormSeverityFilter"><option value="all">All severities</option><option value="Extreme">Extreme</option><option value="Severe">Severe</option><option value="Moderate">Moderate</option><option value="Minor">Minor</option></select>
-  </label>
-  <label>Distance
-   <select id="stormDistanceFilter"><option value="all">Nationwide</option><option value="50">Within 50 miles</option><option value="100">Within 100 miles</option><option value="250">Within 250 miles</option><option value="500">Within 500 miles</option></select>
-  </label>
-  <label class="storm-toggle"><input type="checkbox" id="showStormReports" checked> Show preliminary reports</label>
- </div>
- <div class="storm-legend">
-  <span><i class="legend-dot" style="background:#ff5364"></i>Tornado warning</span>
-  <span><i class="legend-dot" style="background:#ffad4f"></i>Severe thunderstorm warning</span>
-  <span><i class="legend-dot" style="background:#e9d66b"></i>Flash flood warning</span>
-  <span><i class="legend-dot" style="background:#62e7ff"></i>Preliminary storm report</span>
- </div>
- <div class="storm-map" id="stormMap"></div>
- <div class="storm-filter-note" id="stormTrackerStatus">Loading nationwide warning and storm-report data…</div>
- <div class="section-head" style="margin:18px 0 8px"><h2>Active warning details</h2><span>OFFICIAL NWS ALERTS</span></div>
- <div class="storm-report-list" id="stormWarningList"><div class="storm-empty">Loading warnings…</div></div>
- <div class="section-head" style="margin:18px 0 8px"><h2>Recent storm reports</h2><span>PRELIMINARY SPC REPORTS</span></div>
- <div class="storm-report-list" id="stormReportsList"><div class="storm-empty">Loading reports…</div></div>
- <div class="muted-note">Warning polygons show the official warned area, not a confirmed storm path. Storm reports from the Storm Prediction Center are preliminary reports and may be revised. Report locations and times are subject to source limitations. Radar reflectivity is not a verified tornado-rotation, hail-size, or lightning detector; those details are shown only when an official source provides them. This tracker is informational and is not a substitute for NWS warnings or emergency instructions.</div>
-</section>
+
 <div class="metrics">
  <div class="panel metric"><div class="metric-top"><span>HUMIDITY</span><span class="metric-icon">💧</span></div><strong id="humidity">--%</strong><small>Relative moisture</small></div>
  <div class="panel metric"><div class="metric-top"><span>WIND SPEED</span><span class="metric-icon">💨</span></div><strong id="wind">--</strong><small id="windDir">Near surface</small></div>
@@ -122,6 +180,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
   <div id="mapStatus" style="color:var(--cyan);font-size:11px;margin-top:5px">Loading live radar…</div>
  </section>
 </div>
+
 <section class="panel extra-panel" style="margin-top:14px">
  <div class="section-head" style="margin:0 0 8px"><div><h2>🏃 Outdoor activity planner</h2><span>One simple rating for outdoor plans overall</span></div><span>24-HOUR OUTLOOK</span></div>
  <div class="activity-summary" id="activitySummary">Checking forecast conditions for outdoor activities…</div>
@@ -179,6 +238,40 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
   <div class="muted-note">Times are calculated for the selected location and its local time zone. Golden hour is an approximate photography window.</div>
  </section>
 </div>
+<section class="panel storm-tracker-panel" id="stormTracker">
+ <div class="section-head" style="margin:0 0 8px"><div><h2>🌪️ Nationwide weather alerts & storm tracker</h2><span>All active U.S. NWS alerts and preliminary storm reports</span></div><div class="storm-actions"><button type="button" class="small-btn" id="refreshStormTracker">↻ Refresh tracker</button><button type="button" class="small-btn" id="stormNationalView">🇺🇸 U.S. view</button></div></div>
+ <div class="storm-stats">
+  <div class="storm-stat"><span>Active alerts</span><strong id="stormWarningCount">--</strong></div>
+  <div class="storm-stat"><span>Tornado warnings</span><strong id="tornadoWarningCount">--</strong></div>
+  <div class="storm-stat"><span>Severe thunderstorm</span><strong id="severeWarningCount">--</strong></div>
+  <div class="storm-stat"><span>Storm reports</span><strong id="stormReportCount">--</strong></div>
+ </div>
+ <div class="storm-toolbar">
+  <label>Warning type
+   <select id="stormTypeFilter"><option value="all">All active alerts</option><option value="tornado">Tornado warnings</option><option value="severe">Severe thunderstorm warnings</option><option value="flood">Flash flood warnings</option></select>
+  </label>
+  <label>Severity
+   <select id="stormSeverityFilter"><option value="all">All severities</option><option value="Extreme">Extreme</option><option value="Severe">Severe</option><option value="Moderate">Moderate</option><option value="Minor">Minor</option></select>
+  </label>
+  <label>Distance
+   <select id="stormDistanceFilter"><option value="all">Nationwide</option><option value="50">Within 50 miles</option><option value="100">Within 100 miles</option><option value="250">Within 250 miles</option><option value="500">Within 500 miles</option></select>
+  </label>
+  <label class="storm-toggle"><input type="checkbox" id="showStormReports" checked> Show preliminary reports</label>
+ </div>
+ <div class="storm-legend">
+  <span><i class="legend-dot" style="background:#ff5364"></i>Tornado warning</span>
+  <span><i class="legend-dot" style="background:#ffad4f"></i>Severe thunderstorm warning</span>
+  <span><i class="legend-dot" style="background:#e9d66b"></i>Flash flood warning</span>
+  <span><i class="legend-dot" style="background:#62e7ff"></i>Preliminary storm report</span>
+ </div>
+ <div class="storm-map" id="stormMap"></div>
+ <div class="storm-filter-note" id="stormTrackerStatus">Loading nationwide warning and storm-report data…</div>
+ <div class="section-head" style="margin:18px 0 8px"><h2>Active alert details</h2><span>OFFICIAL NWS ALERTS</span></div>
+ <div class="storm-report-list" id="stormWarningList"><div class="storm-empty">Loading warnings…</div></div>
+ <div class="section-head" style="margin:18px 0 8px"><h2>Recent storm reports</h2><span>PRELIMINARY SPC REPORTS</span></div>
+ <div class="storm-report-list" id="stormReportsList"><div class="storm-empty">Loading reports…</div></div>
+ <div class="muted-note">Warning polygons show the official warned area, not a confirmed storm path. Storm reports from the Storm Prediction Center are preliminary reports and may be revised. Report locations and times are subject to source limitations. Radar reflectivity is not a verified tornado-rotation, hail-size, or lightning detector; those details are shown only when an official source provides them. This tracker is informational and is not a substitute for NWS warnings or emergency instructions.</div>
+</section>
 <div class="status" id="status" role="status" aria-live="polite">Connecting to Open-Meteo weather services…</div>
 <footer class="footer">CLOUDWATCH · Forecast data by Open-Meteo · Map © OpenStreetMap contributors · Radar © RainViewer · Storm alerts and reports by NWS/SPC</footer>
 </main>
@@ -239,7 +332,7 @@ function initMap(lat,lon,label){
  if(!window.L){setStatus('Map library did not load. Check your connection and refresh.',true);return}
  if(!map){
   map=L.map('map',{scrollWheelZoom:true,zoomControl:true,maxZoom:19}).setView([lat,lon],8);
-  const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',maxNativeZoom:19,maxZoom:19});
+  const street=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',maxNativeZoom:19,maxZoom:19});
   street.addTo(map);marker=L.marker([lat,lon]).addTo(map);layerControl=L.control.layers({'Street map':street},{},{collapsed:true}).addTo(map);
   map.on('click',async event=>{const clickedLat=event.latlng.lat,clickedLon=event.latlng.lng;let clickedLabel=`Selected location (${clickedLat.toFixed(2)}, ${clickedLon.toFixed(2)})`;try{const reverse=await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${clickedLat}&longitude=${clickedLon}&language=en&format=json`);const result=await reverse.json();if(result.results?.[0]){const place=result.results[0];clickedLabel=[place.name,place.admin1,place.country].filter(Boolean).join(', ')}}catch(error){}loadWeather(clickedLat,clickedLon,clickedLabel)});
   addRadarOverlay();
@@ -250,7 +343,7 @@ function initStormMap(){
  if(!window.L){$('stormTrackerStatus').textContent='Map library did not load. Check your connection and refresh.';return}
  if(stormMap)return;
  stormMap=L.map('stormMap',{scrollWheelZoom:true,zoomControl:true,maxZoom:12}).setView([38.5,-96],4);
- const base=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxNativeZoom:19,maxZoom:19});
+ const base=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap contributors &copy; CARTO',maxNativeZoom:19,maxZoom:19});
  base.addTo(stormMap);
  L.control.layers({'Street map':base},{},{collapsed:true}).addTo(stormMap);
  setTimeout(()=>stormMap.invalidateSize(),200);
@@ -262,7 +355,7 @@ function stormWarningColor(event){
  return '#62e7ff';
 }
 function stormEventMatches(event,type){
- if(type==='all')return /warning/i.test(event);
+ if(type==='all')return Boolean(event);
  if(type==='tornado')return /tornado warning/i.test(event);
  if(type==='severe')return /severe thunderstorm warning/i.test(event);
  if(type==='flood')return /flash flood warning/i.test(event);
@@ -318,7 +411,7 @@ function renderStormWarnings(){
  if(!stormMap)return;
  const visible=nationwideWarnings.filter(stormWarningPasses);
  visible.forEach(f=>{const layer=featureLayer(f);if(layer){layer.addTo(stormMap);stormWarningLayers.push(layer)}});
- $('stormWarningList').innerHTML=visible.length?visible.slice(0,60).map(warningCard).join(''):'<div class="storm-empty">No active warnings match these filters.</div>';
+ $('stormWarningList').innerHTML=visible.length?visible.slice(0,60).map(warningCard).join(''):'<div class="storm-empty">No active alerts match these filters.</div>';
  $('stormWarningCount').textContent=nationwideWarnings.length;
  $('tornadoWarningCount').textContent=nationwideWarnings.filter(f=>/tornado warning/i.test(f.properties?.event||'')).length;
  $('severeWarningCount').textContent=nationwideWarnings.filter(f=>/severe thunderstorm warning/i.test(f.properties?.event||'')).length;
@@ -393,19 +486,34 @@ async function fetchSPCReports(){
 }
 async function loadNationwideStorms(){
  initStormMap();if(!stormMap)return;
- $('stormTrackerStatus').textContent='Loading active nationwide NWS warnings and recent SPC reports…';
+ $('stormTrackerStatus').textContent='Loading all active nationwide NWS alerts and recent SPC reports…';
  try{
-  const r=await fetch('https://api.weather.gov/alerts/active?status=actual&message_type=alert',{headers:{'Accept':'application/geo+json'},cache:'no-store'});
-  if(!r.ok)throw new Error('Nationwide NWS warning feed unavailable');
-  const data=await r.json();
-  nationwideWarnings=(data.features||[]).filter(f=>/tornado warning|severe thunderstorm warning|flash flood warning/i.test(f.properties?.event||''));
+  const endpoints=[
+   'https://api.weather.gov/alerts/active?status=actual',
+   'https://api.weather.gov/alerts/active'
+  ];
+  let data=null,lastError=null;
+  for(const url of endpoints){
+   try{
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+    const response=await fetch(url,{headers:{'Accept':'application/geo+json'},cache:'no-store',signal:controller.signal});
+    clearTimeout(timeout);
+    if(!response.ok)throw new Error(`NWS returned HTTP ${response.status}`);
+    const payload=await response.json();
+    if(!Array.isArray(payload.features))throw new Error('NWS response did not contain an alert list');
+    data=payload;break;
+   }catch(error){lastError=error}
+  }
+  if(!data)throw lastError||new Error('Nationwide NWS alert feed unavailable');
+  nationwideWarnings=data.features.filter(f=>f?.properties?.event);
   clearStormMapLayers();renderStormWarnings();
-  const reports=await fetchSPCReports();nationwideReports=reports;renderStormReports();
-  const reportWord=reports.length===1?'report':'reports';
-  $('stormTrackerStatus').textContent=`Updated ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}. ${nationwideWarnings.length} active NWS warning(s) and ${reports.length} preliminary SPC ${reportWord} loaded.`;
+  try{nationwideReports=await fetchSPCReports()}catch(error){nationwideReports=[]}
+  renderStormReports();
+  const reportWord=nationwideReports.length===1?'report':'reports';
+  $('stormTrackerStatus').textContent=`Updated ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}. ${nationwideWarnings.length} active NWS alert(s) of all types and ${nationwideReports.length} preliminary SPC ${reportWord} loaded.`;
  }catch(e){
   $('stormTrackerStatus').textContent='Could not load nationwide storm data. Check weather.gov and the Storm Prediction Center directly. '+e.message;
-  $('stormWarningList').innerHTML='<div class="storm-empty">Nationwide NWS warning feed is unavailable. Your local severe-weather alert panel remains available above.</div>';
+  $('stormWarningList').innerHTML='<div class="storm-empty">Nationwide NWS alert feed is unavailable. Your local severe-weather alert panel remains available above.</div>';
   $('stormReportsList').innerHTML='<div class="storm-empty">SPC preliminary reports could not be loaded right now.</div>';
  }
 }

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -241,7 +240,7 @@ function initMap(lat,lon,label){
  if(!window.L){setStatus('Map library did not load. Check your connection and refresh.',true);return}
  if(!map){
   map=L.map('map',{scrollWheelZoom:true,zoomControl:true,maxZoom:19}).setView([lat,lon],8);
-  const street=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',maxNativeZoom:19,maxZoom:19});
+  const street=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles &copy; Esri — Sources: Esri, HERE, Garmin, OpenStreetMap contributors, and the GIS user community',maxNativeZoom:19,maxZoom:19});
   street.addTo(map);marker=L.marker([lat,lon]).addTo(map);layerControl=L.control.layers({'Street map':street},{},{collapsed:true}).addTo(map);
   map.on('click',async event=>{const clickedLat=event.latlng.lat,clickedLon=event.latlng.lng;let clickedLabel=`Selected location (${clickedLat.toFixed(2)}, ${clickedLon.toFixed(2)})`;try{const reverse=await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${clickedLat}&longitude=${clickedLon}&language=en&format=json`);const result=await reverse.json();if(result.results?.[0]){const place=result.results[0];clickedLabel=[place.name,place.admin1,place.country].filter(Boolean).join(', ')}}catch(error){}loadWeather(clickedLat,clickedLon,clickedLabel)});
   addRadarOverlay();
@@ -252,7 +251,7 @@ function initStormMap(){
  if(!window.L){$('stormTrackerStatus').textContent='Map library did not load. Check your connection and refresh.';return}
  if(stormMap)return;
  stormMap=L.map('stormMap',{scrollWheelZoom:true,zoomControl:true,maxZoom:12}).setView([38.5,-96],4);
- const base=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap contributors &copy; CARTO',maxNativeZoom:19,maxZoom:19});
+ const base=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles &copy; Esri — Sources: Esri, HERE, Garmin, OpenStreetMap contributors, and the GIS user community',maxNativeZoom:19,maxZoom:19});
  base.addTo(stormMap);
  L.control.layers({'Street map':base},{},{collapsed:true}).addTo(stormMap);
  setTimeout(()=>stormMap.invalidateSize(),200);
